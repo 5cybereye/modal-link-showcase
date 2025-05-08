@@ -43,6 +43,10 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    --bio-light: #f3f0ff;
+    --bio-mid: #9b87f5;
+    --bio-dark: #7E69AB;
   }
 
   .dark {
@@ -113,6 +117,17 @@
   animation: fadeInScale 0.3s ease-out;
   border-radius: 20px !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+  max-height: 85vh !important;
+  overflow-y: auto;
+  width: 90vw !important;
+  max-width: 500px !important;
+}
+
+@media (max-width: 640px) {
+  [data-radix-dialog-content] {
+    width: 95vw !important;
+    padding: 16px !important;
+  }
 }
 
 @keyframes fadeInScale {
@@ -134,3 +149,25 @@
 .glass-card label {
   @apply text-black/70 font-medium;
 }
+
+/* Step form animation */
+.step-transition {
+  @apply transition-all duration-300 transform;
+}
+
+.step-enter {
+  @apply opacity-0 translate-x-4;
+}
+
+.step-enter-active {
+  @apply opacity-100 translate-x-0;
+}
+
+.step-exit {
+  @apply opacity-100 translate-x-0;
+}
+
+.step-exit-active {
+  @apply opacity-0 -translate-x-4;
+}
+

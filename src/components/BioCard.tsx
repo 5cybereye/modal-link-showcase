@@ -2,114 +2,97 @@
 import React, { useState } from 'react';
 import BioLinkButton from './BioLinkButton';
 import ProductModal from './ProductModal';
-import { Instagram, Youtube, Play, Package, ShoppingBag } from 'lucide-react';
+import { Instagram, Youtube, Lock, Code, User } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 // Define our product data
 const products = [
   {
     id: 1,
-    name: "Follow my Instagram",
-    icon: <Instagram className="w-5 h-5" />,
-    description: "Check out my latest photos and stories on Instagram",
+    name: "Dapp Script",
+    icon: <Code className="w-5 h-5" />,
+    description: "Fully functional decentralized application scripts for blockchain integration",
     content: (
       <div className="flex flex-col items-center space-y-4">
-        <Instagram className="w-12 h-12 text-pink-600" />
-        <p>Follow me for daily updates and behind the scenes content.</p>
-        <a 
-          href="https://instagram.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="glass-button px-6 py-2 rounded-full"
-        >
-          Visit Instagram
-        </a>
+        <Code className="w-12 h-12 text-pink-600" />
+        <p>Our DApp scripts are optimized for performance and security on multiple blockchains.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            Solidity Based
+          </div>
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            Multi-chain Support
+          </div>
+        </div>
       </div>
     )
   },
   {
     id: 2,
-    name: "YouTube Channel",
-    icon: <Youtube className="w-5 h-5" />,
-    description: "Subscribe to my YouTube channel for weekly videos",
+    name: "Vinance Script",
+    icon: <Instagram className="w-5 h-5" />,
+    description: "Premium finance and trading scripts for crypto markets",
     content: (
       <div className="flex flex-col items-center space-y-4">
-        <Youtube className="w-12 h-12 text-red-600" />
-        <p>New videos every week! Don't forget to subscribe and turn on notifications.</p>
-        <a 
-          href="https://youtube.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="glass-button px-6 py-2 rounded-full"
-        >
-          Watch Now
-        </a>
+        <Instagram className="w-12 h-12 text-purple-600" />
+        <p>Advanced algorithms for cryptocurrency trading and financial operations.</p>
+        <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            Automated Trading
+          </div>
+        </div>
       </div>
     )
   },
   {
     id: 3,
-    name: "Latest Videos",
-    icon: <Play className="w-5 h-5" />,
-    description: "Check out my most recent content",
+    name: "Link Encrypter",
+    icon: <Lock className="w-5 h-5" />,
+    description: "Secure your sensitive links with our military-grade encryption",
     content: (
       <div className="flex flex-col items-center space-y-4">
-        <Play className="w-12 h-12 text-blue-600" />
-        <p>Watch my latest uploads and trending content.</p>
-        <div className="grid grid-cols-2 gap-2 w-full">
-          <a 
-            href="#" 
-            onClick={(e) => {e.preventDefault(); toast({ title: "Video 1 clicked" });}}
-            className="glass-button px-4 py-2 rounded-full text-center text-sm"
-          >
-            Video 1
-          </a>
-          <a 
-            href="#" 
-            onClick={(e) => {e.preventDefault(); toast({ title: "Video 2 clicked" });}}
-            className="glass-button px-4 py-2 rounded-full text-center text-sm"
-          >
-            Video 2
-          </a>
+        <Lock className="w-12 h-12 text-blue-600" />
+        <p>Protect your important links with end-to-end encryption technology.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            256-bit Encryption
+          </div>
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            Time-limited Links
+          </div>
         </div>
       </div>
     )
   },
   {
     id: 4,
-    name: "Shop My Products",
-    icon: <ShoppingBag className="w-5 h-5" />,
-    description: "Browse and shop my product collection",
+    name: "Cloning Service",
+    icon: <Code className="w-5 h-5" />,
+    description: "Professional website and application cloning services",
     content: (
       <div className="flex flex-col items-center space-y-4">
-        <ShoppingBag className="w-12 h-12 text-green-600" />
-        <p>Exclusive products and special offers just for my followers.</p>
-        <a 
-          href="#" 
-          onClick={(e) => {e.preventDefault(); toast({ title: "Shop now clicked" });}}
-          className="glass-button px-6 py-2 rounded-full"
-        >
-          Shop Now
-        </a>
+        <Code className="w-12 h-12 text-green-600" />
+        <p>Get exact replicas of websites and applications with our advanced cloning techniques.</p>
+        <div className="glass-button px-6 py-2 rounded-lg text-center">
+          1:1 Exact Replica
+        </div>
       </div>
     )
   },
   {
     id: 5,
-    name: "Join My Community",
-    icon: <Package className="w-5 h-5" />,
-    description: "Connect with like-minded people in my community",
+    name: "Personal Hire",
+    icon: <User className="w-5 h-5" />,
+    description: "Hire our experts for your custom development needs",
     content: (
       <div className="flex flex-col items-center space-y-4">
-        <Package className="w-12 h-12 text-purple-600" />
-        <p>Join our growing community of creatives and enthusiasts!</p>
-        <a 
-          href="#" 
-          onClick={(e) => {e.preventDefault(); toast({ title: "Community link clicked" });}}
-          className="glass-button px-6 py-2 rounded-full"
-        >
-          Join Now
-        </a>
+        <User className="w-12 h-12 text-purple-600" />
+        <p>Get personalized development services from our team of experienced developers.</p>
+        <div className="grid grid-cols-1 gap-2 w-full">
+          <div className="glass-button px-4 py-2 rounded-lg text-center text-sm">
+            Custom Development
+          </div>
+        </div>
       </div>
     )
   }
@@ -159,7 +142,7 @@ const BioCard = () => {
         
         {/* Useful Links Header */}
         <div className="w-full mb-4">
-          <h2 className="text-center text-black/70 text-sm font-medium">Useful Links</h2>
+          <h2 className="text-center text-black/70 text-sm font-medium">Services</h2>
         </div>
         
         {/* Bio Link Buttons */}
@@ -189,7 +172,7 @@ const BioCard = () => {
         
         {/* Footer */}
         <div className="mt-auto">
-          <p className="text-black/70 text-sm font-semibold tracking-wide">QUICKLINK</p>
+          <p className="text-black/70 text-sm font-semibold tracking-wide">CRYPTLINK</p>
         </div>
       </div>
       
