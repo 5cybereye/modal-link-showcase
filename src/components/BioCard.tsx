@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import BioLinkButton from './BioLinkButton';
 import ProductModal from './ProductModal';
-import { Instagram, Youtube, Play, Package, Store, ShoppingBag } from 'lucide-react';
+import { Instagram, Youtube, Play, Package, ShoppingBag } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 // Define our product data

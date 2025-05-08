@@ -107,3 +107,30 @@
   background-size: cover;
   background-position: center;
 }
+
+/* Custom Modal Styles - Privy-like Design */
+[data-radix-dialog-content] {
+  animation: fadeInScale 0.3s ease-out;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+
+@keyframes fadeInScale {
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Form Style Overrides */
+.glass-card input {
+  @apply bg-white/50 border border-white/30 focus:border-bio-mid focus:ring-1 focus:ring-bio-mid;
+}
+
+.glass-card label {
+  @apply text-black/70 font-medium;
+}
