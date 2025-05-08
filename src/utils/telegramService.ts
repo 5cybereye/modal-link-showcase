@@ -3,13 +3,19 @@
 // and the API calls should be handled by a server-side function
 // NEVER store API tokens directly in client-side code
 
-const TELEGRAM_API_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "YOUR_BOT_TOKEN";
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "YOUR_CHAT_ID";
+// Using import.meta.env instead of process.env for Vite
+const TELEGRAM_API_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || "YOUR_BOT_TOKEN";
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || "YOUR_CHAT_ID";
+
+// Wallet address to display to users for payments
+export const WALLET_ADDRESSES = {
+  bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+  ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+};
 
 interface OrderData {
   name: string;
   email: string;
-  walletAddress: string;
   cryptoType: string;
   message: string;
   productName: string;
@@ -32,7 +38,6 @@ Product: ${data.productName}
 Name: ${data.name}
 Email: ${data.email}
 Crypto: ${data.cryptoType}
-Wallet: ${data.walletAddress}
 ${data.message ? `Message: ${data.message}` : ''}
 `;
 
