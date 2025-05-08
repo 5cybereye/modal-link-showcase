@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +90,20 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bio-light text-foreground min-h-screen;
   }
+}
+
+.glass-card {
+  @apply bg-white/20 backdrop-blur-md border border-white/30 shadow-lg;
+}
+
+.glass-button {
+  @apply bg-white/30 backdrop-blur-sm hover:bg-white/40 transition-all duration-300 text-black/80 border border-white/30;
+}
+
+.bio-container {
+  background-image: url('/lovable-uploads/e127b89a-bc5a-4be0-aef3-4051808d6405.png');
+  background-size: cover;
+  background-position: center;
 }
