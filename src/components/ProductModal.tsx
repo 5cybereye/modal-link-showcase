@@ -19,7 +19,7 @@ interface ProductModalProps {
   };
 }
 
-type FormStep = 'product' | 'payment' | 'contact' | 'complete';
+type FormStep = 'product' | 'contact' | 'payment' | 'complete';
 
 const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
   const [currentStep, setCurrentStep] = useState<FormStep>('product');
@@ -50,8 +50,6 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
 
   const handleStepComplete = async () => {
     if (currentStep === 'product') {
-      setCurrentStep('payment');
-    } else if (currentStep === 'payment') {
       setCurrentStep('contact');
     } else if (currentStep === 'contact') {
       if (!formData.name || !formData.email) {
@@ -61,7 +59,8 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
         });
         return;
       }
-
+      setCurrentStep('payment');
+    } else if (currentStep === 'payment') {
       setIsSubmitting(true);
       try {
         // Send the data to Telegram
@@ -107,8 +106,8 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
   const progressPercentage = () => {
     switch (currentStep) {
       case 'product': return 25;
-      case 'payment': return 50;
-      case 'contact': return 75;
+      case 'contact': return 50;
+      case 'payment': return 75;
       case 'complete': return 100;
       default: return 0;
     }
@@ -118,7 +117,7 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white border-none p-6 md:p-8 max-w-md mx-auto rounded-3xl shadow-xl">
         {/* Progress bar */}
-        <div className="w-full h-1 bg-gray-100 rounded-full mb-4">
+        <div className="w-full h-1.5 bg-gray-100 rounded-full mb-4">
           <div 
             className="h-full bg-bio-mid rounded-full transition-all duration-300 ease-in-out" 
             style={{ width: `${progressPercentage()}%` }}
@@ -127,20 +126,65 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
         
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-center text-gray-800">
-            {currentStep === 'complete' ? 'Order Confirmed!' : currentStep === 'payment' ? 'Choose Payment Method' : product.name}
+            {currentStep === 'complete' ? 'Order Confirmed!' : currentStep === 'payment' ? 'Complete Payment' : currentStep === 'contact' ? 'Your Information' : product.name}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="mt-6 max-h-[60vh] overflow-y-auto px-1">
+        <div className="mt-6 max-h-[60vh] overflow-y-auto px-1 fade-in">
           {currentStep === 'product' && (
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in">
               <p className="text-gray-600 mb-4 text-center">{product.description}</p>
               <div className="py-2">{product.content}</div>
             </div>
           )}
           
+          {currentStep === 'contact' && (
+            <div className="space-y-5 animate-fade-in">
+              <p className="text-center text-gray-600 mb-2">Please provide your contact information</p>
+              
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-gray-700">Full Name</Label>
+                  <Input 
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="rounded-lg border-gray-200"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-gray-700">Email</Label>
+                  <Input 
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="rounded-lg border-gray-200"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-gray-700">Message (Optional)</Label>
+                  <Input 
+                    id="message"
+                    name="message"
+                    placeholder="Any specific requirements?"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="rounded-lg border-gray-200"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           {currentStep === 'payment' && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               <p className="text-center text-gray-600 mb-2">Select your preferred cryptocurrency</p>
               
               <div className="grid grid-cols-1 gap-3">
@@ -188,7 +232,7 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
                     variant="ghost" 
                     size="sm" 
                     onClick={copyWalletAddress}
-                    className="h-8 gap-1 text-xs"
+                    className="h-8 gap-1 text-xs hover:bg-gray-100"
                   >
                     <Copy className="h-3 w-3" />
                     Copy
@@ -200,7 +244,7 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
                     ref={walletAddressRef}
                     value={formData.cryptoType === 'bitcoin' ? WALLET_ADDRESSES.bitcoin : WALLET_ADDRESSES.ethereum}
                     readOnly
-                    className="pr-10 font-mono text-sm bg-white"
+                    className="pr-10 font-mono text-sm bg-white border-gray-200"
                   />
                 </div>
                 <div className="flex justify-between mt-2">
@@ -217,53 +261,8 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
             </div>
           )}
           
-          {currentStep === 'contact' && (
-            <div className="space-y-5">
-              <p className="text-center text-gray-600 mb-2">Please provide your contact information</p>
-              
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input 
-                    id="name"
-                    name="name"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="rounded-lg"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input 
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="rounded-lg"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message (Optional)</Label>
-                  <Input 
-                    id="message"
-                    name="message"
-                    placeholder="Any specific requirements?"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="rounded-lg"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          
           {currentStep === 'complete' && (
-            <div className="flex flex-col items-center justify-center py-8 space-y-4">
+            <div className="flex flex-col items-center justify-center py-8 space-y-4 animate-fade-in">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                 <Check className="w-8 h-8 text-green-500" />
               </div>
@@ -286,18 +285,18 @@ const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
               'Close'
             ) : (
               <>
-                {currentStep === 'contact' ? 'Submit' : 'Continue'}
-                {currentStep !== 'contact' && <ArrowRight className="w-4 h-4" />}
-                {currentStep === 'contact' && <Send className="w-4 h-4" />}
+                {currentStep === 'payment' ? 'Complete Payment' : 'Continue'}
+                {currentStep !== 'payment' && <ArrowRight className="w-4 h-4" />}
+                {currentStep === 'payment' && <Send className="w-4 h-4" />}
               </>
             )}
           </Button>
           
           {currentStep !== 'product' && currentStep !== 'complete' && !isSubmitting && (
             <Button 
-              onClick={() => setCurrentStep(currentStep === 'contact' ? 'payment' : 'product')}
+              onClick={() => setCurrentStep(currentStep === 'payment' ? 'contact' : 'product')}
               variant="ghost" 
-              className="w-full mt-2"
+              className="w-full mt-2 text-gray-600"
             >
               Back
             </Button>
